@@ -36,3 +36,64 @@
     transform: rotate(360deg);
   }
 }
+
+.timerDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.timerDiv .timer {
+  width: 25px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--dark-color);
+  color: var(--white-color);
+  border-radius: 4px;
+}
+.timerDiv .timerDivider {
+  font-weight: 900;
+  color: #282c34;
+}
+
+.input-title {
+  font-size: 14px;
+  color: var(--dark-color);
+  font-weight: 700;
+}
+
+label {
+  font-size: 12px;
+  color: var(--gray-color);
+}
+.edit-btn {
+  color: var(--light-blue);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+}
+.edit-btn:hover {
+  color: var(--light-blue);
+}
+
+.card-number-input-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #c1c1c1;
+  padding: 14px;
+  border-radius: 10px;
+}
+
+.card-number-input-wrapper .input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.card-number-input-wrapper .input-wrapper input {
+  width: 75px;
+}
