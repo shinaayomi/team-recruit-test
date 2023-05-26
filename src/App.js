@@ -10,127 +10,213 @@ import MasterCardLogo2 from "../src/assets/images/master-card-logo-2.svg";
 import Pen from "../src/assets/images/pen.svg";
 import "./App.css";
 import File from "../src/assets/images/File.svg";
+import { useEffect, useState } from "react";
 
-const FirstColumnCard = () => (
-  <div className="col-md-8 pe-lg-5">
-    <div className="d-flex justify-content-between align-items-center mb-5">
-      <img src={AceLogo} className="img-fluid" alt="logo" />
-      <div className="timerDiv">
-        <div className="timer">0</div>
-        <div className="timer">1</div>
-        <div className="timerDivider">:</div>
-        <div className="timer">1</div>
-        <div className="timer">9</div>
-      </div>
-    </div>
-    <div className="d-flex justify-content-between mb-4">
-      <div>
-        <div className="input-title">Card Number</div>
-        <label htmlFor="">Enter the 16-digit card number on the card</label>
-      </div>
-      <div>
-        <button className="btn edit-btn px-0">
-          <img src={Pen} alt="Edit" className="img-fluid" /> Edit
-        </button>
-      </div>
-    </div>
-    {/* start number card input */}
-    <div className="card-number-input-wrapper p-md-3 p-2 gap-md-3 gap-2">
-      <img src={MasterCardLogo1} alt="Master card" className="img-fluid" />
-      <div className="input-wrapper gap-md-3 gap-1">
-        <input
-          type="text"
-          maxLength={4}
-          pattern="/^[0-9]/g"
-          placeholder="0000"
-        />
-        -
-        <input type="text" maxLength={4} placeholder="0000" />
-        -
-        <input type="text" maxLength={4} placeholder="0000" />
-        -
-        <input type="text" maxLength={4} placeholder="0000" />
-      </div>
-      <BsFillPatchCheckFill color="var(--light-blue)" />
-    </div>
-    {/* end card number input */}
+const FirstColumnCard = (props) => {
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
-    {/* start cvv */}
-    <div className="row my-4">
-      <div className="col-md-6">
-        <div className="input-title">CVV Number</div>
-        <label htmlFor="">Enter 3 or 4 digit number on the card</label>
+  const deadline = "May 31, 2023 15:37:25";
+
+  const timeRunner = () => {
+    let countTime = Date.parse(deadline) - Date.now();
+
+    setDays(Math.floor(countTime / (1000 * 60 * 60 * 24)));
+    setHours(Math.floor((countTime / (1000 * 60 * 60)) % 24));
+    setMinutes(Math.floor((countTime / 1000 / 60) % 60));
+    setSeconds(Math.floor((countTime / 1000) % 60));
+  };
+
+  useEffect(() => {
+    let stopTime = setInterval(() => {
+      timeRunner(deadline);
+    }, 1000);
+    return () => clearInterval(stopTime);
+  }, []);
+
+  function moveToNextField(event, nextFieldId) {
+    const input = event.target;
+    const maxLength = input.getAttribute("maxlength");
+    const currentLength = input.value.length;
+
+    if (currentLength >= maxLength) {
+      const nextField = document.getElementById(nextFieldId);
+      nextField.focus();
+    }
+  }
+
+  function onlyNumbers(event) {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
+  }
+
+  return (
+    <div className="col-md-8 pe-lg-5">
+      <div className="d-flex justify-content-between align-items-center mb-5">
+        <img src={AceLogo} className="img-fluid" alt="logo" />
+        <div className="timerDiv">
+          <div className="timer">
+            {minutes.toLocaleString().substring(0, 1)}
+          </div>
+          <div className="timer">{minutes.toString().slice(1, 2)}</div>
+          <div className="timerDivider">:</div>
+          <div className="timer">{seconds.toString().substring(0, 1)}</div>
+          <div className="timer">{seconds.toString().slice(1, 2)}</div>
+        </div>
       </div>
-      <div className="col-md-6 mt-md-0 mt-3">
-        <div className="cvv-input-wrapper p-1">
+      <div className="d-flex justify-content-between mb-4">
+        <div>
+          <div className="input-title">Card Number</div>
+          <label htmlFor="">Enter the 16-digit card number on the card</label>
+        </div>
+        <div>
+          <button className="btn edit-btn px-0">
+            <img src={Pen} alt="Edit" className="img-fluid" /> Edit
+          </button>
+        </div>
+      </div>
+      {/* start number card input */}
+      <div className="card-number-input-wrapper p-md-3 p-2 gap-md-3 gap-2">
+        <img src={MasterCardLogo1} alt="Master card" className="img-fluid" />
+        <div className="input-wrapper gap-md-3 gap-1">
           <input
             type="text"
-            className="form-control text-center"
-            minLength={3}
+            id="firstNum"
             maxLength={4}
-            placeholder="123"
+            size={4}
+            placeholder="0000"
+            onKeyUp={(event) => moveToNextField(event, "secondNum")}
+            required
           />
-          <button className="btn">
-            <CgMenuGridO fontSize="25px" color="var(--gray-color)" />
-          </button>
-        </div>
-      </div>
-    </div>
-    {/* end cvv */}
-
-    {/* start Expiry Date */}
-    <div className="row ">
-      <div className="col-md-6">
-        <div className="input-title">Expiry Date</div>
-        <label htmlFor="">Enter the expiration date of the card</label>
-      </div>
-      <div className="col-md-6 mt-md-0 mt-3">
-        <div className="expiry-input-wrapper">
+          -
           <input
             type="text"
-            className="form-control text-center"
-            minLength={2}
-            maxLength={2}
-            placeholder="09"
+            id="secondNum"
+            maxLength={4}
+            size={4}
+            placeholder="0000"
+            onKeyUp={(event) => moveToNextField(event, "thirdNum")}
+            required
           />
-          /
+          -
           <input
             type="text"
-            className="form-control text-center"
-            minLength={2}
-            maxLength={2}
-            placeholder="22"
+            id="thirdNum"
+            maxLength={4}
+            size={4}
+            placeholder="0000"
+            onKeyUp={(event) => moveToNextField(event, "forthNum")}
+            required
           />
-        </div>
-      </div>
-    </div>
-    {/* end Expiry Date */}
-
-    {/* start Password */}
-    <div className="row my-4">
-      <div className="col-md-6">
-        <div className="input-title">Password</div>
-        <label htmlFor="">Enter your Dynamic password</label>
-      </div>
-      <div className="col-md-6 mt-md-0 mt-3">
-        <div className="cvv-input-wrapper p-1">
+          -
           <input
-            type="password"
-            className="form-control"
-            placeholder="Password"
+            type="text"
+            id="forthNum"
+            maxLength={4}
+            size={4}
+            onChange={props.ForthNum}
+            placeholder="0000"
+            required
           />
-          <button className="btn">
-            <CgMenuGridO fontSize="25px" color="var(--gray-color)" />
-          </button>
+        </div>
+        <BsFillPatchCheckFill color="var(--light-blue)" />
+      </div>
+      {/* end card number input */}
+
+      {/* start cvv */}
+      <div className="row my-4">
+        <div className="col-md-6">
+          <div className="input-title">CVV Number</div>
+          <label htmlFor="">Enter 3 or 4 digit number on the card</label>
+        </div>
+        <div className="col-md-6 mt-md-0 mt-3">
+          <div className="cvv-input-wrapper p-1">
+            <input
+              type="text"
+              className="form-control text-center"
+              minLength={3}
+              maxLength={4}
+              placeholder="123"
+              required
+            />
+            <button className="btn">
+              <CgMenuGridO fontSize="25px" color="var(--gray-color)" />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    {/* end Password */}
-    <button className="btn pay-btn">Pay Now</button>
-  </div>
-);
+      {/* end cvv */}
 
-const SecondColumnCard = () => {
+      {/* start Expiry Date */}
+      <div className="row ">
+        <div className="col-md-6">
+          <div className="input-title">Expiry Date</div>
+          <label htmlFor="">Enter the expiration date of the card</label>
+        </div>
+        <div className="col-md-6 mt-md-0 mt-3">
+          <div className="expiry-input-wrapper">
+            <input
+              type="text"
+              className="form-control text-center"
+              id="expired-month"
+              minLength={2}
+              maxLength={2}
+              placeholder="09"
+              onChange={props.expiredMonth}
+              onKeyUp={(event) => moveToNextField(event, "expired-year")}
+              required
+            />
+            /
+            <input
+              type="text"
+              className="form-control text-center"
+              id="expired-year"
+              minLength={2}
+              maxLength={2}
+              placeholder="22"
+              onChange={props.expiredYear}
+              required
+            />
+          </div>
+        </div>
+      </div>
+      {/* end Expiry Date */}
+
+      {/* start Password */}
+      <div className="row my-4">
+        <div className="col-md-6">
+          <div className="input-title">Password</div>
+          <label htmlFor="">Enter your Dynamic password</label>
+        </div>
+        <div className="col-md-6 mt-md-0 mt-3">
+          <div className="cvv-input-wrapper p-1">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Password"
+              required
+            />
+            <button className="btn">
+              <CgMenuGridO fontSize="25px" color="var(--gray-color)" />
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* end Password */}
+      <button className="btn pay-btn" htmltype="submit">
+        Pay Now
+      </button>
+    </div>
+  );
+};
+
+const SecondColumnCard = (props) => {
   const _detailLists = [
     {
       title: "Company",
@@ -161,9 +247,13 @@ const SecondColumnCard = () => {
               <img src={Wifi} alt="Wifi" className="img-fluid" />
             </div>
             <div className="name mt-auto">Jonathan Michael</div>
-            <div className="card-number mt-1 mb-4">•••• &nbsp; 3456</div>
+            <div className="card-number mt-1 mb-4">
+              •••• &nbsp; {props.forthNums}
+            </div>
             <div className="d-flex justify-content-between">
-              <div className="card-number date">09/22</div>
+              <div className="card-number date">
+                {props.expiredMonth}/{props.expiredYear}
+              </div>
               <img
                 src={MasterCardLogo2}
                 alt="Master card"
@@ -220,30 +310,44 @@ const SecondColumnCard = () => {
 };
 
 function App() {
+  const [forthNumValue, setForthNumValue] = useState("3456");
+  const [monthExpired, setMonthExpired] = useState("09");
+  const [yearExpired, setYearExpired] = useState("22");
+
   return (
     <>
-      <header className="App-header">
+      <header className="App-header py-md-4">
         <div
           className="container bg-white position-relative py-5 px-md-5"
           style={{ maxWidth: "1050px" }}
         >
-          <div
-            className="position-absolute"
-            style={{ top: "8px", right: "12px" }}
-          >
-            <button className="btn border-0 p-0">
-              <VscChromeClose />
-            </button>
-          </div>
-          <div className="row align-items-md-center">
-            {/* start first column */}
-            <FirstColumnCard />
-            {/* end first column */}
+          <form action="">
+            <div
+              className="position-absolute"
+              style={{ top: "8px", right: "12px" }}
+            >
+              <button className="btn border-0 p-0">
+                <VscChromeClose />
+              </button>
+            </div>
+            <div className="row align-items-md-center">
+              {/* start first column */}
+              <FirstColumnCard
+                ForthNum={(e) => setForthNumValue(e.target.value)}
+                expiredMonth={(e) => setMonthExpired(e.target.value)}
+                expiredYear={(e) => setYearExpired(e.target.value)}
+              />
+              {/* end first column */}
 
-            {/* start second column */}
-            <SecondColumnCard />
-            {/* end second column */}
-          </div>
+              {/* start second column */}
+              <SecondColumnCard
+                forthNums={forthNumValue}
+                expiredMonth={monthExpired}
+                expiredYear={yearExpired}
+              />
+              {/* end second column */}
+            </div>
+          </form>
         </div>
       </header>
     </>
