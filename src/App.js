@@ -13,8 +13,8 @@ import File from "../src/assets/images/File.svg";
 import { useEffect, useState } from "react";
 
 const FirstColumnCard = (props) => {
-  const [days, setDays] = useState(0);
-  const [hours, setHours] = useState(0);
+  // const [days, setDays] = useState(0);
+  // const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
@@ -23,8 +23,8 @@ const FirstColumnCard = (props) => {
   const timeRunner = () => {
     let countTime = Date.parse(deadline) - Date.now();
 
-    setDays(Math.floor(countTime / (1000 * 60 * 60 * 24)));
-    setHours(Math.floor((countTime / (1000 * 60 * 60)) % 24));
+    // setDays(Math.floor(countTime / (1000 * 60 * 60 * 24)));
+    // setHours(Math.floor((countTime / (1000 * 60 * 60)) % 24));
     setMinutes(Math.floor((countTime / 1000 / 60) % 60));
     setSeconds(Math.floor((countTime / 1000) % 60));
   };
@@ -47,14 +47,14 @@ const FirstColumnCard = (props) => {
     }
   }
 
-  function onlyNumbers(event) {
-    const charCode = event.which ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      event.preventDefault();
-      return false;
-    }
-    return true;
-  }
+  // function onlyNumbers(event) {
+  //   const charCode = event.which ? event.which : event.keyCode;
+  //   if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+  //     event.preventDefault();
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   return (
     <div className="col-md-8 pe-lg-5">
