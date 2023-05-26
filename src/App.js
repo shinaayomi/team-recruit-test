@@ -64,10 +64,10 @@ const FirstColumnCard = (props) => {
           <div className="timer">
             {minutes.toLocaleString().substring(0, 1)}
           </div>
-          <div className="timer">{minutes.toString().slice(1, 2)}</div>
+          <div className="timer">{minutes.toLocaleString().charAt(1)}</div>
           <div className="timerDivider">:</div>
-          <div className="timer">{seconds.toString().substring(0, 1)}</div>
-          <div className="timer">{seconds.toString().slice(1, 2)}</div>
+          <div className="timer">{seconds.toString().charAt(0)}</div>
+          <div className="timer">{seconds.toString().charAt(1)}</div>
         </div>
       </div>
       <div className="d-flex justify-content-between mb-4">
@@ -76,7 +76,7 @@ const FirstColumnCard = (props) => {
           <label htmlFor="">Enter the 16-digit card number on the card</label>
         </div>
         <div>
-          <button className="btn edit-btn px-0">
+          <button className="btn edit-btn px-0" onClick={props.editBtn}>
             <img src={Pen} alt="Edit" className="img-fluid" /> Edit
           </button>
         </div>
@@ -92,6 +92,7 @@ const FirstColumnCard = (props) => {
             size={4}
             placeholder="0000"
             onKeyUp={(event) => moveToNextField(event, "secondNum")}
+            disabled={props.disabled}
             required
           />
           -
@@ -102,6 +103,7 @@ const FirstColumnCard = (props) => {
             size={4}
             placeholder="0000"
             onKeyUp={(event) => moveToNextField(event, "thirdNum")}
+            disabled={props.disabled}
             required
           />
           -
@@ -112,6 +114,7 @@ const FirstColumnCard = (props) => {
             size={4}
             placeholder="0000"
             onKeyUp={(event) => moveToNextField(event, "forthNum")}
+            disabled={props.disabled}
             required
           />
           -
@@ -122,6 +125,7 @@ const FirstColumnCard = (props) => {
             size={4}
             onChange={props.ForthNum}
             placeholder="0000"
+            disabled={props.disabled}
             required
           />
         </div>
@@ -143,6 +147,7 @@ const FirstColumnCard = (props) => {
               minLength={3}
               maxLength={4}
               placeholder="123"
+              disabled={props.disabled}
               required
             />
             <button className="btn">
@@ -170,6 +175,7 @@ const FirstColumnCard = (props) => {
               placeholder="09"
               onChange={props.expiredMonth}
               onKeyUp={(event) => moveToNextField(event, "expired-year")}
+              disabled={props.disabled}
               required
             />
             /
@@ -181,6 +187,7 @@ const FirstColumnCard = (props) => {
               maxLength={2}
               placeholder="22"
               onChange={props.expiredYear}
+              disabled={props.disabled}
               required
             />
           </div>
@@ -200,6 +207,7 @@ const FirstColumnCard = (props) => {
               type="password"
               className="form-control"
               placeholder="Password"
+              disabled={props.disabled}
               required
             />
             <button className="btn">
@@ -209,7 +217,7 @@ const FirstColumnCard = (props) => {
         </div>
       </div>
       {/* end Password */}
-      <button className="btn pay-btn" htmltype="submit">
+      <button className="btn pay-btn" onClick={props.payBtn}>
         Pay Now
       </button>
     </div>
@@ -313,6 +321,7 @@ function App() {
   const [forthNumValue, setForthNumValue] = useState("3456");
   const [monthExpired, setMonthExpired] = useState("09");
   const [yearExpired, setYearExpired] = useState("22");
+  const [disabledInput, setDisabledInput] = useState(true);
 
   return (
     <>
@@ -336,6 +345,9 @@ function App() {
                 ForthNum={(e) => setForthNumValue(e.target.value)}
                 expiredMonth={(e) => setMonthExpired(e.target.value)}
                 expiredYear={(e) => setYearExpired(e.target.value)}
+                disabled={disabledInput}
+                editBtn={() => setDisabledInput(false)}
+                payBtn={() => setDisabledInput(true)}
               />
               {/* end first column */}
 
