@@ -90,6 +90,8 @@ const FirstColumnCard = (props) => {
             id="firstNum"
             maxLength={4}
             size={4}
+            value={props.firstNumberValue}
+            onChange={props.FirstNum}
             placeholder="0000"
             onKeyUp={(event) => moveToNextField(event, "secondNum")}
             disabled={props.disabled}
@@ -101,6 +103,8 @@ const FirstColumnCard = (props) => {
             id="secondNum"
             maxLength={4}
             size={4}
+            value={props.secondNumberValue}
+            onChange={props.SecondNum}
             placeholder="0000"
             onKeyUp={(event) => moveToNextField(event, "thirdNum")}
             disabled={props.disabled}
@@ -112,6 +116,8 @@ const FirstColumnCard = (props) => {
             id="thirdNum"
             maxLength={4}
             size={4}
+            value={props.thirdNumberValue}
+            onChange={props.ThirdNum}
             placeholder="0000"
             onKeyUp={(event) => moveToNextField(event, "forthNum")}
             disabled={props.disabled}
@@ -123,6 +129,7 @@ const FirstColumnCard = (props) => {
             id="forthNum"
             maxLength={4}
             size={4}
+            value={props.forthNumberValue}
             onChange={props.ForthNum}
             placeholder="0000"
             disabled={props.disabled}
@@ -146,6 +153,8 @@ const FirstColumnCard = (props) => {
               className="form-control text-center"
               minLength={3}
               maxLength={4}
+              value={props.cvvValue}
+              onChange={props.changeCvv}
               placeholder="123"
               disabled={props.disabled}
               required
@@ -173,12 +182,13 @@ const FirstColumnCard = (props) => {
               minLength={2}
               maxLength={2}
               placeholder="09"
+              value={props.monthValue}
               onChange={props.expiredMonth}
               onKeyUp={(event) => moveToNextField(event, "expired-year")}
               disabled={props.disabled}
               required
             />
-            /
+            <div className="fw-bold">/</div>
             <input
               type="text"
               className="form-control text-center"
@@ -186,6 +196,7 @@ const FirstColumnCard = (props) => {
               minLength={2}
               maxLength={2}
               placeholder="22"
+              value={props.yearValue}
               onChange={props.expiredYear}
               disabled={props.disabled}
               required
@@ -207,6 +218,8 @@ const FirstColumnCard = (props) => {
               type="password"
               className="form-control"
               placeholder="Password"
+              value={props.passwordValue}
+              onChange={props.changePassword}
               disabled={props.disabled}
               required
             />
@@ -318,10 +331,67 @@ const SecondColumnCard = (props) => {
 };
 
 function App() {
+  const [firstNumValue, setFirstNumValue] = useState("2412");
+  const [secondNumValue, setSecondNumValue] = useState("3456");
+  const [thirdNumValue, setThirdNumValue] = useState("3456");
   const [forthNumValue, setForthNumValue] = useState("3456");
+  const [cvvValue, setCvvValue] = useState("327");
   const [monthExpired, setMonthExpired] = useState("09");
   const [yearExpired, setYearExpired] = useState("22");
+  const [passwordInput, setPasswordInput] = useState("");
   const [disabledInput, setDisabledInput] = useState(true);
+
+  const handleFirstNum = (e) => {
+    const inputValue = e.target.value;
+    setFirstNumValue(inputValue);
+    setFirstNumValue(inputValue.replace(/\D/g, ""));
+  };
+
+  const handleSecondNumInput = (e) => {
+    const inputValue = e.target.value;
+    setSecondNumValue(inputValue);
+    const numericValue = inputValue.replace(/\D/g, "");
+    setSecondNumValue(numericValue);
+  };
+
+  const handleThirdNumInput = (e) => {
+    const inputValue = e.target.value;
+    setThirdNumValue(inputValue);
+    const numericValue = inputValue.replace(/\D/g, "");
+    setThirdNumValue(numericValue);
+  };
+
+  const handleForthNumInput = (e) => {
+    const inputValue = e.target.value;
+    setForthNumValue(inputValue);
+    const numericValue = inputValue.replace(/\D/g, "");
+    setForthNumValue(numericValue);
+  };
+
+  const handleCvvInput = (e) => {
+    const inputValue = e.target.value;
+    setCvvValue(inputValue);
+    const numericValue = inputValue.replace(/\D/g, "");
+    setCvvValue(numericValue);
+  };
+
+  const handleExpiredMonthInput = (e) => {
+    const inputValue = e.target.value;
+    setMonthExpired(inputValue);
+    const numericValue = inputValue.replace(/\D/g, "");
+    setMonthExpired(numericValue);
+  };
+
+  const handleExpiredYearInput = (e) => {
+    const inputValue = e.target.value;
+    setYearExpired(inputValue);
+    const numericValue = inputValue.replace(/\D/g, "");
+    setYearExpired(numericValue);
+  };
+
+  const handlePassword = (e) => {
+    setPasswordInput(e.target.value);
+  };
 
   return (
     <>
@@ -342,9 +412,22 @@ function App() {
             <div className="row align-items-md-center">
               {/* start first column */}
               <FirstColumnCard
-                ForthNum={(e) => setForthNumValue(e.target.value)}
-                expiredMonth={(e) => setMonthExpired(e.target.value)}
-                expiredYear={(e) => setYearExpired(e.target.value)}
+                firstNumberValue={firstNumValue}
+                FirstNum={handleFirstNum}
+                secondNumberValue={secondNumValue}
+                SecondNum={handleSecondNumInput}
+                thirdNumberValue={thirdNumValue}
+                ThirdNum={handleThirdNumInput}
+                forthNumberValue={forthNumValue}
+                ForthNum={handleForthNumInput}
+                cvvValue={cvvValue}
+                changeCvv={handleCvvInput}
+                monthValue={monthExpired}
+                expiredMonth={handleExpiredMonthInput}
+                yearValue={yearExpired}
+                expiredYear={handleExpiredYearInput}
+                passwordValue={passwordInput}
+                changePassword={handlePassword}
                 disabled={disabledInput}
                 editBtn={() => setDisabledInput(false)}
                 payBtn={() => setDisabledInput(true)}

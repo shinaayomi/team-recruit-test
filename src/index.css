@@ -22,6 +22,10 @@ code {
     monospace;
 }
 
+input:disabled {
+  color: #b8bdd1;
+}
+
 input:disabled::placeholder {
   color: #b8bdd1;
 }
