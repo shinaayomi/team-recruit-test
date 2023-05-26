@@ -1,11 +1,11 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 :root {
-  --dark-color: #1e241b;
+  --dark-color: #1e2a53;
   --white-color: #ffffff;
-  --blue-color: rgba(47, 0, 255, 0.987);
-  --light-blue: rgb(19, 137, 227);
-  --gray-color: rgb(111, 111, 111);
+  --blue-color: #025efe;
+  --light-blue: #01a1f1;
+  --gray-color: #8890a7;
 }
 
 body {
