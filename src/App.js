@@ -59,7 +59,7 @@ const FirstColumnCard = () => (
     <div className="row my-4">
       <div className="col-md-6">
         <div className="input-title">CVV Number</div>
-        <label htmlFor="">Enter 3 or 4 number on the card</label>
+        <label htmlFor="">Enter 3 or 4 digit number on the card</label>
       </div>
       <div className="col-md-6 mt-md-0 mt-3">
         <div className="cvv-input-wrapper p-1">
@@ -225,7 +225,7 @@ function App() {
       <header className="App-header">
         <div
           className="container bg-white position-relative py-5 px-md-5"
-          style={{ maxWidth: "1000px" }}
+          style={{ maxWidth: "1050px" }}
         >
           <div
             className="position-absolute"
