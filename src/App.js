@@ -86,7 +86,11 @@ const FirstColumnCard = (props) => {
           <label htmlFor="">Enter the 16-digit card number on the card</label>
         </div>
         <div>
-          <button className="btn edit-btn px-0" onClick={props.editBtn}>
+          <button
+            className="btn edit-btn px-0"
+            type="button"
+            onClick={props.editBtn}
+          >
             <img src={Pen} alt="Edit" className="img-fluid" /> Edit
           </button>
         </div>
@@ -240,7 +244,7 @@ const FirstColumnCard = (props) => {
         </div>
       </div>
       {/* end Password */}
-      <button className="btn pay-btn" onClick={props.payBtn}>
+      <button className="btn pay-btn" type="button" onClick={props.payBtn}>
         Pay Now
       </button>
     </div>
@@ -415,7 +419,7 @@ function App() {
               className="position-absolute"
               style={{ top: "8px", right: "12px" }}
             >
-              <button className="btn border-0 p-0">
+              <button className="btn border-0 p-0" type="button">
                 <VscChromeClose />
               </button>
             </div>
