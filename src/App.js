@@ -62,12 +62,22 @@ const FirstColumnCard = (props) => {
         <img src={AceLogo} className="img-fluid" alt="logo" />
         <div className="timerDiv">
           <div className="timer">
-            {minutes.toLocaleString().substring(0, 1)}
+            {minutes > 9 ? minutes.toLocaleString().substring(0, 1) : "0"}
           </div>
-          <div className="timer">{minutes.toLocaleString().charAt(1)}</div>
+          <div className="timer">
+            {minutes > 9
+              ? minutes.toLocaleString().charAt(1)
+              : minutes.toLocaleString().charAt(0)}
+          </div>
           <div className="timerDivider">:</div>
-          <div className="timer">{seconds.toString().charAt(0)}</div>
-          <div className="timer">{seconds.toString().charAt(1)}</div>
+          <div className="timer">
+            {seconds > 9 ? seconds.toString().charAt(0) : "0"}
+          </div>
+          <div className="timer">
+            {seconds > 9
+              ? seconds.toString().charAt(1)
+              : seconds.toString().charAt(0)}
+          </div>
         </div>
       </div>
       <div className="d-flex justify-content-between mb-4">
@@ -230,7 +240,7 @@ const FirstColumnCard = (props) => {
         </div>
       </div>
       {/* end Password */}
-      <button className="btn pay-btn" onClick={props.payBtn}>
+      <button className="btn pay-btn" htmltype="submit" onClick={props.payBtn}>
         Pay Now
       </button>
     </div>
@@ -429,7 +439,7 @@ function App() {
                 passwordValue={passwordInput}
                 changePassword={handlePassword}
                 disabled={disabledInput}
-                editBtn={() => setDisabledInput(false)}
+                editBtn={() => setDisabledInput(!disabledInput)}
                 payBtn={() => setDisabledInput(true)}
               />
               {/* end first column */}
