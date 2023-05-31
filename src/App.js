@@ -240,7 +240,7 @@ const FirstColumnCard = (props) => {
         </div>
       </div>
       {/* end Password */}
-      <button className="btn pay-btn" htmltype="submit" onClick={props.payBtn}>
+      <button className="btn pay-btn" onClick={props.payBtn}>
         Pay Now
       </button>
     </div>
