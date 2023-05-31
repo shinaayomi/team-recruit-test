@@ -18,7 +18,7 @@ const FirstColumnCard = (props) => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  const deadline = "May 31, 2023 15:37:25";
+  const deadline = "June 31, 2023 15:37:25";
 
   const timeRunner = () => {
     let countTime = Date.parse(deadline) - Date.now();
